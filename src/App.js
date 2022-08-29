@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { nanoid } from 'nanoid'
 import Start from "./components/Start";
 import Question from "./components/Question"
 
@@ -21,7 +22,7 @@ export default function App() {
   const quiz = quizData.map(item => {
     return (
       <Question
-        key={item.question}
+        key={nanoid()}
         question={item.question}
         wrongOptions={item.incorrect_answers}
         correctOption={item.correct_answer}
