@@ -21,7 +21,7 @@ export default function App() {
     const newCorrect = [];
     quizData.forEach(question => {
       newCorrect.push({
-        id: question.question,
+        name: question.question,
         value: question.value
       })
     })
@@ -30,7 +30,7 @@ export default function App() {
     const newSelection = [];
     quizData.forEach(question => {
       newSelection.push({
-        id: question.question,
+        name: question.question,
         value: ""
       })
     })
@@ -38,12 +38,10 @@ export default function App() {
   }
 
   function handleAnswerChange(event) {
-    const { id, value } = event.target;
-    console.log(id, value)
-    console.log(selectedOptions)
+    const { name, value } = event.target;
     
     const newSelection = selectedOptions.map(question => {
-      if (question.id === id) {
+      if (question.name === name) {
         return { ...question, value: value };
       }
       return question;
@@ -64,7 +62,8 @@ export default function App() {
     )
   })
 
-  console.log(selectedOptions);
+  //console.log(quizData)
+  console.log(selectedOptions)
 
   return (
     <div className="App">

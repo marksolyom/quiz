@@ -2,15 +2,21 @@ import { shuffle } from "lodash";
 import { nanoid } from 'nanoid'
 
 export default function Question(props) {
-    const shuffledAnswers = shuffle([...props.wrongOptions, props.correctOption]);
-    const options = shuffledAnswers.map(answer => {
+
+    //const shuffledAnswers = shuffle([...props.wrongOptions, props.correctOption]);
+    //SHUFFLE DISABLED TEMPORARILY
+
+    const shuffledAnswers = [...props.wrongOptions, props.correctOption];
+
+    const choices = shuffledAnswers.map(answer => {
         return (
             <div key={nanoid()}>
                 <input
-                    id={props.question}
+                    id={answer}
                     name={props.question}
                     value={answer}
                     type="radio"
+                    checked={props.selectedOptions.some(obj => obj.value === answer)}
                     onChange={props.handleChange}
                 />
                 <label
@@ -25,7 +31,7 @@ export default function Question(props) {
         <div className="quiz">
             <p>{props.question}</p>
             <div className="options">
-            {options}
+            {choices}
             </div>
         </div>
     )
