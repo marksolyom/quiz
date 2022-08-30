@@ -1,4 +1,4 @@
-import { shuffle } from "lodash";
+//import { shuffle } from "lodash";
 import { nanoid } from 'nanoid'
 
 export default function Question(props) {
@@ -31,8 +31,9 @@ export default function Question(props) {
         <div className="quiz">
             <p>{props.question}</p>
             <div className="options">
-            {choices}
+                {choices}
             </div>
+            <hr />
         </div>
     )
 }
