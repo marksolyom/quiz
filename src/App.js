@@ -5,21 +5,22 @@ import Question from "./components/Question";
 import Result from "./components/Result";
 
 export default function App() {
-  const [gameStarted, setGameStarted] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
+  const [score, setScore] = useState(null);
+  const [round, setRound] = useState(1);
   const [quizData, setQuizData] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [score, setScore] = useState(null);
-
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5&category=15&type=multiple")
       .then((response) => response.json())
       .then((data) => setQuizData(data.results));
-  }, []);
+  }, [round]);
 
   function startGame() {
-    setGameStarted(!gameStarted);
+    setQuizStarted(quiz => !quiz);
 
     const newCorrect = [];
     quizData.forEach(question => {
@@ -65,9 +66,8 @@ export default function App() {
     )
   })
 
-  console.log(correctAnswers, selectedOptions)
-
   function checkResult() {
+    setGameEnded(game => !game)
     let matches = 0;
     for (let i = 0; i <= 4; i++) {
       if (JSON.stringify(selectedOptions[i]) === JSON.stringify(correctAnswers[i])) {
@@ -79,11 +79,30 @@ export default function App() {
       setScore(matches);
     }
 
+    function startNewGame() {
+      setQuizStarted(quiz => !quiz);
+      setGameEnded(game => !game);
+      setScore(null);
+      setRound(round => round + 1);
+    }
+
   return (
     <div className="App">
-      {!gameStarted && <Start handleClick={startGame} />}
-      {gameStarted && quiz}
-      {gameStarted && <Result handleClick={checkResult} score={score} />}
+
+      {!quizStarted && <Start 
+      handleClick={startGame} 
+      />}
+
+      {quizStarted && quiz}
+
+      {quizStarted && <Result 
+      handleCheckResult={checkResult} 
+      handleStartNewGame={startNewGame}
+      score={score} 
+      quizStarted={quizStarted}
+      gameEnded={gameEnded}
+      />}
+
     </div>
   );
 }

@@ -3,7 +3,7 @@ export default function Start(props) {
         <div className="start">
             <h1>Gaming Quiz</h1>
             <p>Test your video game knowledge!</p>
-            <button onClick={props.handleClick}>Let's Go</button>
+            <button className="go-button" onClick={props.handleClick}>Let's Go</button>
         </div>
     )
 }
