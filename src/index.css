@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 .start,
 .quiz {
   display: flex;
@@ -19,6 +23,23 @@ body {
   justify-content: center;
   gap: 30px;
   margin-bottom: 30px;
+}
+
+.radio-choice input[type="radio"] {
+  display: none;
+}
+
+.radio-choice label {
+  display: inline-block;
+  color: white;
+  background-color: rgb(103, 103, 255);
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.radio-choice input[type="radio"]:checked+label {
+  background-color: rgb(178, 95, 255);
 }
 
 .result {

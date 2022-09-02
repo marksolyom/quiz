@@ -62,6 +62,7 @@ export default function App() {
         correctOption={item.correct_answer}
         selectedOptions={selectedOptions}
         handleChange={handleAnswerChange}
+        gameEnded={gameEnded}
       />
     )
   })
