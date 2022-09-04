@@ -23,12 +23,8 @@ export default function App() {
 
   useEffect(() => {
     const shuffledQuiz = quizData.map(question => ({...question, all_answers: shuffle([...question.incorrect_answers, question.correct_answer])}));
+
     setShuffledQuizData(shuffledQuiz);
-  }, [quizData]);
-
-  function startGame() {
-    setQuizStarted(quiz => !quiz);
-
     const newCorrect = [];
     quizData.forEach(question => {
       newCorrect.push({
@@ -46,6 +42,10 @@ export default function App() {
       })
     })
     setSelectedOptions(newSelection);
+  }, [quizData]);
+
+  function startGame() {
+    setQuizStarted(quiz => !quiz);
   }
 
   function handleAnswerChange(event) {
