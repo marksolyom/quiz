@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { nanoid } from 'nanoid';
+import { shuffle } from "lodash";
 import Start from "./components/Start";
-import Question from "./components/Question";
+import Questions from "./components/Questions";
 import Result from "./components/Result";
 
 export default function App() {
@@ -12,12 +13,18 @@ export default function App() {
   const [quizData, setQuizData] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [shuffledQuizData, setShuffledQuizData] = useState([]);
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5&category=15&type=multiple")
       .then((response) => response.json())
       .then((data) => setQuizData(data.results));
   }, [round]);
+
+  useEffect(() => {
+    const shuffledQuiz = quizData.map(question => ({...question, all_answers: shuffle([...question.incorrect_answers, question.correct_answer])}));
+    setShuffledQuizData(shuffledQuiz);
+  }, [quizData]);
 
   function startGame() {
     setQuizStarted(quiz => !quiz);
@@ -53,13 +60,13 @@ export default function App() {
     setSelectedOptions(newSelection);
   }
 
-  const quiz = quizData.map(item => {
+  const quiz = shuffledQuizData.map(item => {
     return (
-      <Question
+      <Questions
         key={nanoid()}
         question={item.question}
-        wrongOptions={item.incorrect_answers}
-        correctOption={item.correct_answer}
+        shuffled={item.all_answers}
+        correctAnswer={item.correct_answer}
         selectedOptions={selectedOptions}
         handleChange={handleAnswerChange}
         gameEnded={gameEnded}
@@ -74,34 +81,34 @@ export default function App() {
       if (JSON.stringify(selectedOptions[i]) === JSON.stringify(correctAnswers[i])) {
         matches++;
       }
-      } if (matches === 0) {
-        matches = "0";
-      }
-      setScore(matches);
+    } if (matches === 0) {
+      matches = "0";
     }
+    setScore(matches);
+  }
 
-    function startNewGame() {
-      setQuizStarted(quiz => !quiz);
-      setGameEnded(game => !game);
-      setScore(null);
-      setRound(round => round + 1);
-    }
+  function startNewGame() {
+    setQuizStarted(quiz => !quiz);
+    setGameEnded(game => !game);
+    setScore(null);
+    setRound(round => round + 1);
+  }
 
   return (
     <div className="App">
 
-      {!quizStarted && <Start 
-      handleClick={startGame} 
+      {!quizStarted && <Start
+        handleClick={startGame}
       />}
 
       {quizStarted && quiz}
 
-      {quizStarted && <Result 
-      handleCheckResult={checkResult} 
-      handleStartNewGame={startNewGame}
-      score={score} 
-      quizStarted={quizStarted}
-      gameEnded={gameEnded}
+      {quizStarted && <Result
+        handleCheckResult={checkResult}
+        handleStartNewGame={startNewGame}
+        score={score}
+        quizStarted={quizStarted}
+        gameEnded={gameEnded}
       />}
 
     </div>

@@ -1,5 +1,4 @@
 export default function Results(props) {
-
     return (
         <div className="result">
             {props.quizStarted && !props.gameEnded && <button

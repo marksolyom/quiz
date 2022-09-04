@@ -1,14 +1,7 @@
-//import { shuffle } from "lodash";
-import { nanoid } from 'nanoid'
-//import { useEffect } from 'react';
+import { nanoid } from 'nanoid';
 
-export default function Question(props) {
-    //shuffledAnswers = shuffle([...props.wrongOptions, props.correctOption]);
-    //SHUFFLE DISABLED TEMPORARILY
-
-    const shuffledAnswers = [...props.wrongOptions, props.correctOption];
-
-    const choices = shuffledAnswers.map(answer => {
+export default function Questions(props) {
+    const choices = props.shuffled.map(answer => {
         return (
             <div className='radio-choice' key={nanoid()}>
                 <input
@@ -26,9 +19,9 @@ export default function Question(props) {
                         backgroundColor:
                             ((props.gameEnded &&
                                 props.selectedOptions.some(obj => obj.value === answer) &&
-                                props.correctOption === answer && "green")) ||
+                                props.correctAnswer === answer && "green")) ||
                             (props.gameEnded &&
-                                props.correctOption === answer &&
+                                props.correctAnswer === answer &&
                                 props.selectedOptions.some(obj => obj.value !== answer) && "red")
                     }}
                     htmlFor={answer}>
