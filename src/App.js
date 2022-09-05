@@ -22,11 +22,15 @@ export default function App() {
   }, [round]);
 
   useEffect(() => {
-    const shuffledQuiz = quizData.map(question => ({...question, all_answers: shuffle([...question.incorrect_answers, question.correct_answer])}));
+    const translatedString = JSON.stringify(quizData)
+      .replace(/&quot;/g, '\\"')
+      .replace(/&#039;/g, "'");
+    const translated = JSON.parse(translatedString);
+    const shuffledQuiz = translated.map(question => ({ ...question, all_answers: shuffle([...question.incorrect_answers, question.correct_answer]) }));
 
     setShuffledQuizData(shuffledQuiz);
     const newCorrect = [];
-    quizData.forEach(question => {
+    shuffledQuiz.forEach(question => {
       newCorrect.push({
         name: question.question,
         value: question.correct_answer
@@ -35,7 +39,7 @@ export default function App() {
     setCorrectAnswers(newCorrect);
 
     const newSelection = [];
-    quizData.forEach(question => {
+    shuffledQuiz.forEach(question => {
       newSelection.push({
         name: question.question,
         value: ""
