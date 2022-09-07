@@ -16,7 +16,7 @@ export default function App() {
   const [shuffledQuizData, setShuffledQuizData] = useState([]);
 
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5&category=15&type=multiple")
+    fetch("https://opentdb.com/api.php?amount=5&category=20&type=multiple")
       .then((response) => response.json())
       .then((data) => setQuizData(data.results));
   }, [round]);

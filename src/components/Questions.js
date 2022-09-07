@@ -3,9 +3,8 @@ import { nanoid } from 'nanoid';
 export default function Questions(props) {
     const choices = props.shuffled.map(answer => {
         return (
-            <div className='radio-choice' key={nanoid()}>
+            <div className='choice' key={nanoid()}>
                 <input
-
                     id={answer}
                     name={props.question}
                     value={answer}
@@ -19,10 +18,10 @@ export default function Questions(props) {
                         backgroundColor:
                             ((props.gameEnded &&
                                 props.selectedOptions.some(obj => obj.value === answer) &&
-                                props.correctAnswer === answer && "green")) ||
+                                props.correctAnswer === answer && "#00a000")) ||
                             (props.gameEnded &&
                                 props.correctAnswer === answer &&
-                                props.selectedOptions.some(obj => obj.value !== answer) && "red")
+                                props.selectedOptions.some(obj => obj.value !== answer) && "#c80000")
                     }}
                     htmlFor={answer}>
                     {answer}
