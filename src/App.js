@@ -24,7 +24,8 @@ export default function App() {
   useEffect(() => {
     const translatedString = JSON.stringify(quizData)
       .replace(/&quot;/g, '\\"')
-      .replace(/&#039;/g, "'");
+      .replace(/&#039;/g, "'")
+      .replace(/&amp;/g, "&");
     const translated = JSON.parse(translatedString);
     const shuffledQuiz = translated.map(question => ({ ...question, all_answers: shuffle([...question.incorrect_answers, question.correct_answer]) }));
 
