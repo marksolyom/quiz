@@ -34,7 +34,7 @@ export default function App() {
     shuffledQuiz.forEach(question => {
       newCorrect.push({
         name: question.question,
-        value: question.correct_answer
+        value: question.correct_answer+question.question
       })
     })
     setCorrectAnswers(newCorrect);
@@ -65,20 +65,6 @@ export default function App() {
     setSelectedOptions(newSelection);
   }
 
-  const quiz = shuffledQuizData.map(item => {
-    return (
-      <Questions
-        key={nanoid()}
-        question={item.question}
-        shuffled={item.all_answers}
-        correctAnswer={item.correct_answer}
-        selectedOptions={selectedOptions}
-        handleChange={handleAnswerChange}
-        gameEnded={gameEnded}
-      />
-    )
-  })
-
   function checkResult() {
     setGameEnded(game => !game)
     let matches = 0;
@@ -98,6 +84,20 @@ export default function App() {
     setScore(null);
     setRound(round => round + 1);
   }
+
+  const quiz = shuffledQuizData.map(item => {
+    return (
+      <Questions
+        key={nanoid()}
+        question={item.question}
+        answers={item.all_answers}
+        correctAnswer={item.correct_answer}
+        selectedOptions={selectedOptions}
+        handleChange={handleAnswerChange}
+        gameEnded={gameEnded}
+      />
+    )
+  })
 
   return (
     <div className="App">

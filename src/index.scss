@@ -43,6 +43,10 @@ button {
   cursor: pointer;
 }
 
+.App {
+  height: 100vh;
+}
+
 .start,
 .quiz {
   @include flexCenter();
@@ -51,7 +55,8 @@ button {
 }
 
 .start {
-  top: 180px;
+  height: 100vh;
+  bottom: 100px;
 
   h1 {
     font-size: 3.5rem;
